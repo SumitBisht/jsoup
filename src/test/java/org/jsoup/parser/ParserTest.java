@@ -592,4 +592,10 @@ public class ParserTest {
         Document doc = Jsoup.parse("<textarea>One</textarea>");
         assertEquals("<textarea>One</textarea>", doc.body().html());
     }
+    @Test public void readsLargePageInformationFully() {
+        String simplePage = "<html>\n <head></head>\n <body>\n  s \n </body>\n</html>";
+        String expectedNewLine = "<html>\n <head>\n <link />\n\n\n <link />\n </head>\n <body>\n </body>\n</html>";
+        assertEquals(simplePage, Jsoup.parse("s").html());
+        assertEquals(expectedNewLine, Jsoup.parse("<link />\n\n\n<link />").html());
+	}
 }
